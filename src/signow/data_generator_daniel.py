@@ -30,6 +30,12 @@ def sir_model(S0, I0, R0, beta, gamma, days):
     S[0] = S0
     I[0] = I0
     R[0] = R0
+    
+    Npop = S0+I0+R0
+
+    S[0] = S0/Npop
+    I[0] = I0/Npop
+    R[0] = R0/Npop
 
     # Simulate the SIR model
     for t in range(1, days):
@@ -51,11 +57,12 @@ def sir_model(S0, I0, R0, beta, gamma, days):
 S0 = 999  # Initial susceptible population
 I0 = 1  # Initial infected population
 R0 = 0  # Initial recovered population
-beta = 0.3  # Infection rate
+beta = 0.2  # Infection rate
 gamma = 0.1  # Recovery rate
 days = 160  # Number of days to simulate
 
 results = sir_model(S0, I0, R0, beta, gamma, days)
+print(beta)
 print(results)
 
 

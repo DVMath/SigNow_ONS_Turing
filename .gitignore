@@ -203,3 +203,5 @@ results/
 
 # VS code files
 .vscode/
+
+.vs/
