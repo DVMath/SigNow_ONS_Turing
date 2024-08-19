@@ -37,7 +37,7 @@ from walkthrough_helper_funcs import display_indicators, display_target, display
 
 # %%
 # Generate the target and indicator data
-indicators, target = create_data(start_date='2000-01-01',
+indicators, target = create_data_sir(start_date='2000-01-01',
                                 end_date='2014-06-01',
                                 num_indicators=3,
                                 wide_indic_df=False)
@@ -227,6 +227,14 @@ coef = sn_.model_.estimator_['regression'].coef_
 sig_terms_train = sn_.model_.transform_pipe_.fit_transform(X=sn_.data.X_train(), y=sn_.data.y_train())
 
 display_barh_coef(coef, sig_terms_train)
+
+# %% [markdown]
+# daniel: Run again predictions 
+
+# %%
+# Predictions
+
+display_t_predictions(y_train, y_test, y_ref, target, ref_realisation)
 
 # %% [markdown]
 # _______________________________________________________________________________________________

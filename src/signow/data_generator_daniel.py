@@ -130,6 +130,66 @@ def generate_dummy_indicators(
     df_concat.index.name = "ref_date"
     return df_concat[["value", "indicator_name"]]
 
+def generate_sir_indicators(
+    indexed_df: pd.DataFrame, indicator_name: list, length: int
+) -> pd.DataFrame:
+    """Generates a set of indicators based on
+    specified amount of indicators.
+
+    Parameters
+    ----------
+    indexed_df : pd.DataFrame
+        An indexed empty dataframe.
+    indicator_name : list
+        List of indicators
+    length : int
+        Number of data points to generate.
+
+    Returns
+    -------
+    pd.DataFrame
+        Indicators in long format.
+    """
+
+    # Example usage:
+    S0 = 999  # Initial susceptible population
+    I0 = 1  # Initial infected population
+    R0 = 0  # Initial recovered population
+    beta = 0.2  # Infection rate
+    gamma = 0.1  # Recovery rate
+    days = length  # Number of days to simulate
+
+    results = sir_model(S0, I0, R0, beta, gamma, days)
+
+    df = indexed_df.copy()
+    df_concat = pd.DataFrame(columns=["indicator_name", "value"])
+    
+    df["value"] = results[:,0]
+    df["indicator_name"] = "a"
+    # concat this indicator with the others
+    df_concat = pd.concat([df_concat, df])
+    # reset the df
+    df = indexed_df.copy()
+    
+    
+    df["value"] = results[:,1]
+    df["indicator_name"] = "b"
+    # concat this indicator with the others
+    df_concat = pd.concat([df_concat, df])
+    # reset the df
+    df = indexed_df.copy()
+
+        
+    df["value"] = results[:,2]
+    df["indicator_name"] = "c"
+    # concat this indicator with the others
+    df_concat = pd.concat([df_concat, df])
+    # reset the df
+    df = indexed_df.copy()
+
+    df_concat.index.name = "ref_date"
+    return df_concat[["value", "indicator_name"]]
+
 
 def generate_dummy_target(
     index: pd.DatetimeIndex, indicators: pd.DataFrame, indicator_name: list, length: int
@@ -292,10 +352,22 @@ def create_data_sir(
 
     base_df = pd.DataFrame(index=month_index)
 
+    # Example usage:
+    S0 = 999  # Initial susceptible population
+    I0 = 1  # Initial infected population
+    R0 = 0  # Initial recovered population
+    beta = 0.2  # Infection rate
+    gamma = 0.1  # Recovery rate
+    days = len(base_df)  # Number of days to simulate
+
+    results = sir_model(S0, I0, R0, beta, gamma, days)
+    # print(beta)
+    # print(results)
+
     _indicator_names = "abcdefghijklmnopqrstuvwxyz"
     _names = list(_indicator_names[0:num_indicators])
 
-    indicators_df = generate_dummy_indicators(
+    indicators_df = generate_sir_indicators(
         indexed_df=base_df, indicator_name=_names, length=len(base_df)
     )
 
