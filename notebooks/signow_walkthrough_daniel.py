@@ -43,6 +43,8 @@ indicators, target = create_data_sir(start_date='2000-01-01',
                                 wide_indic_df=False)
 ref_realisation = target[target.index == '2014-04-01']
 target=target[target.index < '2014-03-01']
+print("target ...")
+print(target)
 # Plot indicator and target data
 display_indicators(indicators)
 display_target(target)

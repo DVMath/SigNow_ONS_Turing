@@ -432,6 +432,9 @@ def create_data_sir(
         indicator_name=_names,
         length=len(base_df),
     )
+    print(">>>>>> DataFrames in create_data_sir:")
+    print(indicators_df)
+    print(target_df)
 
     if wide_indic_df:
         indicators_df = indicators_df.pivot(columns="indicator_name", values="value")
