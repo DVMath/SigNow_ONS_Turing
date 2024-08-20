@@ -191,6 +191,58 @@ def generate_sir_indicators(
     return df_concat[["value", "indicator_name"]]
 
 
+def generate_dummy_target_orig(
+    index: pd.DatetimeIndex, indicators: pd.DataFrame, indicator_name: list, length: int
+) -> pd.DataFrame:
+    """Generates a target dataframe that is
+    a higher frequency than indicators.
+
+    Parameters
+    ----------
+    index : pd.DatetimeIndex
+        Date index for the generated data.
+    indicators : pd.DataFrame
+        Indicators DataFrame.
+    indicator_name : list
+        List of indicator names.
+    length : int
+        Length of the indicators DataFrame.
+
+    Returns
+    -------
+    pd.DataFrame
+        Target DataFrame
+    """
+    target_df = indicators.pivot(columns="indicator_name", values="value")
+    stdev = .00001
+    target_df["noise"] = stdev * np.random.randn(length)
+
+    # fmt: off
+    _operations = [
+        1, 2, 2, 3, 4, 5, 2, 3, 4, 5,
+        6, 7, 8, 4, 3, 2, 4, 5, 7, 8,
+        2, 3, 4, 5, 2, 3
+    ]
+    # fmt: on
+
+    # normalise the operations
+    _operations = [
+        float(i) / sum(_operations[0 : len(indicator_name)])
+        for i in _operations[0 : len(indicator_name)]
+    ]
+
+    target_df["value"] = 0
+    for i, indicator in enumerate(indicator_name):
+        target_df["value"] += _operations[i] * target_df[indicator]
+
+    target_df["value"] += target_df["noise"] / 10
+    target_df = target_df.loc[index, "value"]
+    target_df.index.name = "ref_date"
+    target_df.index = pd.to_datetime(target_df.index, dayfirst=True)
+
+    return target_df.to_frame()
+
+
 def generate_dummy_target(
     index: pd.DatetimeIndex, indicators: pd.DataFrame, indicator_name: list, length: int
 ) -> pd.DataFrame:
@@ -214,7 +266,8 @@ def generate_dummy_target(
         Target DataFrame
     """
     target_df = indicators.pivot(columns="indicator_name", values="value")
-    target_df["noise"] = np.random.randn(length)
+    stdev = .00001
+    target_df["noise"] = stdev * np.random.randn(length)
 
     # fmt: off
     _operations = [

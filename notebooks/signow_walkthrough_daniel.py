@@ -31,7 +31,7 @@
 import pandas as pd
 
 from signow.signature_nowcasting import SigNowcaster
-from signow.data_generator_daniel import create_data, create_data_sir, sir_model
+from signow.data_generator_daniel import create_data_sir, sir_model
 
 from walkthrough_helper_funcs import display_indicators, display_target, display_period_data, print_period_dates, display_t_predictions, display_barh_coef
 

@@ -50,4 +50,4 @@ docs = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/datasciencecampus/SigNow_ONS_Turing"
+"Homepage" = "https://github.com/DVMath/SigNow_ONS_Turing"
