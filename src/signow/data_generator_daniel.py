@@ -301,17 +301,17 @@ def create_data(
     return indicators_df, target_df
 
 
-if __name__ == "__main__":
-    indicators, target = create_data(
-        start_date="2000-01-01",
-        end_date="2014-06-01",
-        num_indicators=3,
-        wide_indic_df=False,
-    )
-
-    print(">>>>>> DataFrames:")
-    print(indicators)
-    print(target)
+#if __name__ == "__main__":
+#    indicators, target = create_data(
+#        start_date="2000-01-01",
+#        end_date="2014-06-01",
+#        num_indicators=3,
+#        wide_indic_df=False,
+#    )
+#
+#    print(">>>>>> DataFrames:")
+#    print(indicators)
+#    print(target)
 
 def create_data_sir(
     start_date: str,
@@ -385,7 +385,7 @@ def create_data_sir(
 
 
 if __name__ == "__main__":
-    indicators, target = create_data(
+    indicators, target = create_data_sir(
         start_date="2000-01-01",
         end_date="2014-06-01",
         num_indicators=3,
