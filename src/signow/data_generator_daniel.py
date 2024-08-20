@@ -166,7 +166,7 @@ def generate_sir_indicators(
     df = indexed_df.copy()
     df_concat = pd.DataFrame(columns=["indicator_name", "value"])
     
-    df["value"] = Npop*results[:,0]
+    df["value"] = Npop*results[:,1]
     df["indicator_name"] = "a"
     # concat this indicator with the others
     df_concat = pd.concat([df_concat, df])
@@ -174,15 +174,16 @@ def generate_sir_indicators(
     df = indexed_df.copy()
     
     
-    df["value"] = Npop*results[:,1]
+    df["value"] = random_ar_data(length=length) 
+    #df["value"] = Npop*results[:,1]
     df["indicator_name"] = "b"
     # concat this indicator with the others
     df_concat = pd.concat([df_concat, df])
     # reset the df
     df = indexed_df.copy()
 
-        
-    df["value"] = Npop*results[:,2]
+    df["value"] = random_ar_data(length=length) 
+    #df["value"] = Npop*results[:,2]
     df["indicator_name"] = "c"
     # concat this indicator with the others
     df_concat = pd.concat([df_concat, df])
@@ -277,6 +278,12 @@ def generate_dummy_target(
         9, 12, 10, 11, 10, 9, 7, 5, 6, 5,
         4, 4, 3, 4, 2, 1
     ]
+    # fmt: off
+    _operations = [
+        1, .1, .1, 3, 4, 5, 2, 3, 4, 5,
+        6, 7, 8, 4, 3, 2, 4, 5, 7, 8,
+        2, 3, 4, 5, 2, 3
+    ]
     # fmt: on
 
     # normalise the operations
@@ -284,6 +291,9 @@ def generate_dummy_target(
         float(i) / sum(_operations[0 : len(indicator_name)])
         for i in _operations[0 : len(indicator_name)]
     ]
+
+    print("operations")
+    print(_operations)
 
     target_df["value"] = 0
     for i, indicator in enumerate(indicator_name):
@@ -422,7 +432,7 @@ def create_data_sir(
     _indicator_names = "abcdefghijklmnopqrstuvwxyz"
     _names = list(_indicator_names[0:num_indicators])
 
-    indicators_df = generate_dummy_indicators(
+    indicators_df = generate_sir_indicators(
         indexed_df=base_df, indicator_name=_names, length=len(base_df)
     )
 
