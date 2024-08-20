@@ -54,16 +54,16 @@ def sir_model(S0, I0, R0, beta, gamma, days):
 
 
 # Example usage:
-S0 = 999  # Initial susceptible population
-I0 = 1  # Initial infected population
-R0 = 0  # Initial recovered population
-beta = 0.2  # Infection rate
-gamma = 0.1  # Recovery rate
-days = 160  # Number of days to simulate
+#S0 = 999  # Initial susceptible population
+#I0 = 1  # Initial infected population
+#R0 = 0  # Initial recovered population
+#beta = 0.2  # Infection rate
+#gamma = 0.1  # Recovery rate
+#days = 160  # Number of days to simulate
 
-results = sir_model(S0, I0, R0, beta, gamma, days)
-print(beta)
-print(results)
+#results = sir_model(S0, I0, R0, beta, gamma, days)
+#print(beta)
+#print(results)
 
 
 def random_ar_data(length: int) -> np.ndarray:
