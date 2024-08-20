@@ -273,9 +273,9 @@ def generate_dummy_target(
 
     # fmt: off
     _operations = [
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1
+        1, 2, 4, 3, 5, 7, 5, 5, 7, 8,
+        9, 12, 10, 11, 10, 9, 7, 5, 6, 5,
+        4, 4, 3, 4, 2, 1
     ]
     # fmt: on
 
@@ -422,7 +422,7 @@ def create_data_sir(
     _indicator_names = "abcdefghijklmnopqrstuvwxyz"
     _names = list(_indicator_names[0:num_indicators])
 
-    indicators_df = generate_sir_indicators(
+    indicators_df = generate_dummy_indicators(
         indexed_df=base_df, indicator_name=_names, length=len(base_df)
     )
 
