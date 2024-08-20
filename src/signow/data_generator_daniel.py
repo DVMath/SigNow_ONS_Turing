@@ -161,7 +161,7 @@ def generate_sir_indicators(
 
     results = sir_model(S0, I0, R0, beta, gamma, days)
 
-    Npop = 1000
+    Npop = 10
 
     df = indexed_df.copy()
     df_concat = pd.DataFrame(columns=["indicator_name", "value"])
