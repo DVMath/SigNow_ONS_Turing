@@ -161,10 +161,12 @@ def generate_sir_indicators(
 
     results = sir_model(S0, I0, R0, beta, gamma, days)
 
+    Npop = 1000
+
     df = indexed_df.copy()
     df_concat = pd.DataFrame(columns=["indicator_name", "value"])
     
-    df["value"] = results[:,0]
+    df["value"] = Npop*results[:,0]
     df["indicator_name"] = "a"
     # concat this indicator with the others
     df_concat = pd.concat([df_concat, df])
@@ -172,7 +174,7 @@ def generate_sir_indicators(
     df = indexed_df.copy()
     
     
-    df["value"] = results[:,1]
+    df["value"] = Npop*results[:,1]
     df["indicator_name"] = "b"
     # concat this indicator with the others
     df_concat = pd.concat([df_concat, df])
@@ -180,7 +182,7 @@ def generate_sir_indicators(
     df = indexed_df.copy()
 
         
-    df["value"] = results[:,2]
+    df["value"] = Npop*results[:,2]
     df["indicator_name"] = "c"
     # concat this indicator with the others
     df_concat = pd.concat([df_concat, df])
@@ -214,7 +216,7 @@ def generate_dummy_target_orig(
         Target DataFrame
     """
     target_df = indicators.pivot(columns="indicator_name", values="value")
-    stdev = .00001
+    stdev = 1
     target_df["noise"] = stdev * np.random.randn(length)
 
     # fmt: off
