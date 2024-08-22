@@ -165,31 +165,26 @@ def generate_sir_indicators(
 
     df = indexed_df.copy()
     df_concat = pd.DataFrame(columns=["indicator_name", "value"])
-    
-    df["value"] = Npop*results[:,1]
-    df["indicator_name"] = "a"
-    # concat this indicator with the others
-    df_concat = pd.concat([df_concat, df])
-    # reset the df
-    df = indexed_df.copy()
-    
-    
-    df["value"] = random_ar_data(length=length) 
-    #df["value"] = Npop*results[:,1]
-    df["indicator_name"] = "b"
-    # concat this indicator with the others
-    df_concat = pd.concat([df_concat, df])
-    # reset the df
-    df = indexed_df.copy()
 
-    df["value"] = random_ar_data(length=length) 
-    #df["value"] = Npop*results[:,2]
-    df["indicator_name"] = "c"
-    # concat this indicator with the others
-    df_concat = pd.concat([df_concat, df])
-    # reset the df
-    df = indexed_df.copy()
-
+    for name in indicator_name:
+        if (name != "a")
+            # Set the random walk path for this indicator
+            df["value"] = random_ar_data(length=length)
+            # assign the indictaor its name
+            df["indicator_name"] = name
+            # concat this indicator with the others
+            df_concat = pd.concat([df_concat, df])
+            # reset the df
+            df = indexed_df.copy()
+        else
+            df["value"] = Npop*results[:,1]
+            df["indicator_name"] = "a"
+            # concat this indicator with the others
+            df_concat = pd.concat([df_concat, df])
+            # reset the df
+            df = indexed_df.copy()
+    
+    
     df_concat.index.name = "ref_date"
     return df_concat[["value", "indicator_name"]]
 
