@@ -167,7 +167,7 @@ def generate_sir_indicators(
     df_concat = pd.DataFrame(columns=["indicator_name", "value"])
 
     for name in indicator_name:
-        if (name != "a")
+        if name != "a":
             # Set the random walk path for this indicator
             df["value"] = random_ar_data(length=length)
             # assign the indictaor its name
@@ -176,7 +176,7 @@ def generate_sir_indicators(
             df_concat = pd.concat([df_concat, df])
             # reset the df
             df = indexed_df.copy()
-        else
+        else:
             df["value"] = Npop*results[:,1]
             df["indicator_name"] = "a"
             # concat this indicator with the others

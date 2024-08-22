@@ -39,7 +39,7 @@ from walkthrough_helper_funcs import display_indicators, display_target, display
 # Generate the target and indicator data
 indicators, target = create_data_sir(start_date='2000-01-01',
                                 end_date='2014-06-01',
-                                num_indicators=3,
+                                num_indicators=2,
                                 wide_indic_df=False)
 ref_realisation = target[target.index == '2014-04-01']
 target=target[target.index < '2014-03-01']
