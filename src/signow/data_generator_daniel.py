@@ -130,6 +130,49 @@ def generate_dummy_indicators(
     df_concat.index.name = "ref_date"
     return df_concat[["value", "indicator_name"]]
 
+def generate_file_indicators(
+    indexed_df: pd.DataFrame, indicator_name: list, file_str: str, length: int
+) -> pd.DataFrame:
+    """Generates a set of indicators based on
+    specified amount of indicators.
+
+    Parameters
+    ----------
+    indexed_df : pd.DataFrame
+        An indexed empty dataframe.
+    indicator_name : list
+        List of indicators
+    file_str : str
+        path of csv file
+    length : int
+        Number of data points to generate.
+
+    Returns
+    -------
+    pd.DataFrame
+        Indicators in long format.
+    """
+    df = indexed_df.copy()
+    df_concat = pd.DataFrame(columns=["indicator_name", "value"])
+    
+    dfr = pd.read_csv(file_str)
+    
+    seq_ind = pd.Series([16])
+    for name,iind in zip(indicator_name,seq_ind):
+        # Set the random walk path for this indicator
+        #df["value"] = random_ar_data(length=length)
+        df["value"] = dfr[:, iind]
+        # assign the indictaor its name
+        df["indicator_name"] = name
+        # concat this indicator with the others
+        df_concat = pd.concat([df_concat, df])
+        # reset the df
+        df = indexed_df.copy()
+
+    df_concat.index.name = "ref_date"
+    return df_concat[["value", "indicator_name"]]
+
+
 def generate_sir_indicators(
     indexed_df: pd.DataFrame, indicator_name: list, length: int
 ) -> pd.DataFrame:
@@ -234,6 +277,47 @@ def generate_dummy_target_orig(
         target_df["value"] += _operations[i] * target_df[indicator]
 
     target_df["value"] += target_df["noise"] / 10
+    target_df = target_df.loc[index, "value"]
+    target_df.index.name = "ref_date"
+    target_df.index = pd.to_datetime(target_df.index, dayfirst=True)
+
+    return target_df.to_frame()
+
+
+
+def generate_file_target(
+    index: pd.DatetimeIndex, indicators: pd.DataFrame, indicator_name: list, file_str: str, length: int
+) -> pd.DataFrame:
+    """Generates a target dataframe that is
+    a higher frequency than indicators.
+
+    Parameters
+    ----------
+    index : pd.DatetimeIndex
+        Date index for the generated data.
+    indicators : pd.DataFrame
+        Indicators DataFrame.
+    indicator_name : list
+        List of indicator names.
+    file_str : str
+        path of csv file.
+    length : int
+        Length of the indicators DataFrame.
+
+    Returns
+    -------
+    pd.DataFrame
+        Target DataFrame
+    """
+    target_df = indicators.pivot(columns="indicator_name", values="value")
+    stdev = 1
+    target_df["noise"] = stdev * np.random.randn(length)
+
+    dfr = pd.read_csv(file_str)
+
+    iind_target = 28
+    target_df = dfr[:, iind_target]
+    
     target_df = target_df.loc[index, "value"]
     target_df.index.name = "ref_date"
     target_df.index = pd.to_datetime(target_df.index, dayfirst=True)
@@ -352,6 +436,75 @@ def create_data_orig(
         index=quarter_index,
         indicators=indicators_df,
         indicator_name=_names,
+        length=len(base_df),
+    )
+
+    if wide_indic_df:
+        indicators_df = indicators_df.pivot(columns="indicator_name", values="value")
+
+    return indicators_df, target_df
+
+
+def create_data_file(
+    start_date_o: str,
+    end_date_o: str,
+    file_str: str,
+    num_indicators: int,
+    wide_indic_df: bool = True,
+    SEED=12345,
+):
+    """Main function call that generates
+    the indicator and target dataframe.
+
+    Parameters
+    ----------
+    start_date : str
+        Start date for the generated data. Obs: replaced by file
+    end_date : str
+        End date for the generated data. Obs: replaced by file
+    file_str : str
+        path of csv file.
+    num_indicators : int
+        Number of indicators required.
+    wide_indic_df : bool, optional
+        convert indicators to wide, by default True
+    SEED : int, optional
+        Seed for the random generator, by default 12345
+
+    Returns
+    -------
+    indicators_df : pd.DataFrame
+        Indicator DataFrame
+    target_df : pd.DataFrame
+        Target DataFrame
+    """
+    np.random.seed(SEED)
+    dfr = pd.read_csv(file_str)
+
+    start_date = dfr[1,1]
+    end_date = dfr[len(dfr), 1]
+
+    month_index = pd.date_range(start=start_date, end=end_date, freq="W-WED")
+    quarter_index = pd.date_range(
+        start=start_date, end=end_date, freq = "W-WED" # freq=pd.offsets.MonthBegin(3)
+    )
+
+    base_df = pd.DataFrame(index=month_index)
+
+    _indicator_names = "abcdefghijklmnopqrstuvwxyz"
+    _names = list(_indicator_names[0:num_indicators])
+
+    #dfr = pd.read_csv(file_str)
+
+    indicators_df = generate_file_indicators(
+        indexed_df=base_df, indicator_name=_names, file_str=file_str, length=len(base_df)
+    )
+
+    target_df = generate_file_target(
+        index=quarter_index,
+        indicators=indicators_df,
+        indicator_name=_names,
+        file_str = file_str,
         length=len(base_df),
     )
 
