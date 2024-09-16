@@ -325,7 +325,7 @@ def generate_file_target(
     #iind_target = 28-1
     target_df["value"] = dfr.iloc[:, iind_target]
     
-    target_df = target_df.loc[index, "value"]
+    target_df = target_df.loc[index, ["value"]]
     target_df.index.name = "ref_date"
     target_df.index = pd.to_datetime(target_df.index, dayfirst=True)
 

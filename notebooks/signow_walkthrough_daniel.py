@@ -56,7 +56,7 @@ print(f"End date: {end_date}")
 print(f"End date+1: {end_date_plus_one_month}")
 
 ref_realisation = target[target.index == end_date_plus_one_month]
-target=target[target.index < end_date]
+target=target[target.index < end_date_plus_one_month]
 print("target ...")
 print(target)
 # Plot indicator and target data
