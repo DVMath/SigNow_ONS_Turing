@@ -42,8 +42,21 @@ indicators, target = create_data_file(start_date_o='2000-01-01',
                                 file_str = 'file_dengue_74_1.csv',
                                 num_indicators=1,
                                 wide_indic_df=False)
-ref_realisation = target[target.index == '2018-08-01']
-target=target[target.index < '2019-03-01']
+
+dfr = pd.read_csv(file_str)
+# print(dfr)
+
+start_date = dfr.iloc[0,3-1]
+end_date = dfr.iloc[len(dfr)-1, 3-1]
+
+end_date_plus_one_month = pd.to_datetime(end_date) + pd.DateOffset(months=1)
+
+print(f"Start date: {start_date}")
+print(f"End date: {end_date}")
+print(f"End date+1: {end_date_plus_one_month}")
+
+ref_realisation = target[target.index == end_date_plus_one_month]
+target=target[target.index < end_date]
 print("target ...")
 print(target)
 # Plot indicator and target data

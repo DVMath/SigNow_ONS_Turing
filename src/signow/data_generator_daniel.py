@@ -490,12 +490,12 @@ def create_data_file(
     start_date = dfr.iloc[0,3-1]
     end_date = dfr.iloc[len(dfr)-1, 3-1]
 
-    print(f"Start date: {start_date}")
-    print(f"End date: {end_date}")
+    print(f"create Start date: {start_date}")
+    print(f"create End date: {end_date}")
 
-    month_index = pd.date_range(start=start_date, end=end_date, freq="W-WED")
+    month_index = pd.date_range(start=start_date, end=end_date, freq="MS")
     quarter_index = pd.date_range(
-        start=start_date, end=end_date, freq = "W-WED" # freq=pd.offsets.MonthBegin(3)
+        start=start_date, end=end_date, freq = "MS" # freq=pd.offsets.MonthBegin(3)
     )
 
     base_df = pd.DataFrame(index=month_index)
