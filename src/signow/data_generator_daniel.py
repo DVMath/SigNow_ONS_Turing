@@ -316,7 +316,7 @@ def generate_file_target(
     dfr = pd.read_csv(file_str)
 
     iind_target = 28-1
-    target_df = dfr.iloc[:, iind_target]
+    target_df["value"] = dfr.iloc[:, iind_target]
     
     target_df = target_df.loc[index, "value"]
     target_df.index.name = "ref_date"
