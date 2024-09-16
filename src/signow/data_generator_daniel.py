@@ -480,9 +480,13 @@ def create_data_file(
     """
     np.random.seed(SEED)
     dfr = pd.read_csv(file_str)
+    # print(dfr)
 
-    start_date = dfr[1,3]
-    end_date = dfr[len(dfr), 3]
+    start_date = dfr.iloc[0,3]
+    end_date = dfr.iloc[len(dfr)-1, 3]
+
+    print(f"Start date: {start_date}")
+    print(f"End date: {end_date}")
 
     month_index = pd.date_range(start=start_date, end=end_date, freq="W-WED")
     quarter_index = pd.date_range(
