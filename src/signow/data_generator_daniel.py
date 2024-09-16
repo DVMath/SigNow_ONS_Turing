@@ -175,6 +175,8 @@ def generate_file_indicators(
         df = indexed_df.copy()
 
     df_concat.index.name = "ref_date"
+    print("df_concat")
+    print(df_concat)
     return df_concat[["value", "indicator_name"]]
 
 
