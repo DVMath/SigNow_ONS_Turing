@@ -319,8 +319,10 @@ def generate_file_target(
     target_df["noise"] = stdev * np.random.randn(length)
 
     dfr = pd.read_csv(file_str)
-
     iind_target = 28-1
+    print("dfr")
+    print(dfr.iloc[:, iind_target])
+    #iind_target = 28-1
     target_df["value"] = dfr.iloc[:, iind_target]
     
     target_df = target_df.loc[index, "value"]

@@ -43,7 +43,7 @@ indicators, target = create_data_file(start_date_o='2000-01-01',
                                 num_indicators=1,
                                 wide_indic_df=False)
 
-dfr = pd.read_csv(file_str)
+dfr = pd.read_csv('file_dengue_74_1.csv')
 # print(dfr)
 
 start_date = dfr.iloc[0,3-1]
