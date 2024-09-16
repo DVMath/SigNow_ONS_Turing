@@ -162,6 +162,11 @@ def generate_file_indicators(
         # Set the random walk path for this indicator
         #df["value"] = random_ar_data(length=length)
         df["value"] = dfr.iloc[:, iind]
+        print("generate file indicators")
+        print(name)
+        print(iind)
+        print(dfr.iloc[:, iind])
+        print("end test generate file indicators")
         # assign the indictaor its name
         df["indicator_name"] = name
         # concat this indicator with the others
