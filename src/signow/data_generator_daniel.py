@@ -511,6 +511,8 @@ def create_data_file(
         indexed_df=base_df, indicator_name=_names, file_str=file_str, length=len(base_df)
     )
 
+    print("quarter_index")
+    print(quarter_index)
     target_df = generate_file_target(
         index=quarter_index,
         indicators=indicators_df,
