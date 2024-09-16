@@ -42,8 +42,8 @@ indicators, target = create_data_file(start_date_o='2000-01-01',
                                 file_str = 'file_dengue_74_1.csv',
                                 num_indicators=1,
                                 wide_indic_df=False)
-ref_realisation = target[target.index == '2014-04-01']
-target=target[target.index < '2014-03-01']
+ref_realisation = target[target.index == '2018-08-01']
+target=target[target.index < '2019-03-01']
 print("target ...")
 print(target)
 # Plot indicator and target data

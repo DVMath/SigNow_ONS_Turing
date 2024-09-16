@@ -161,7 +161,7 @@ def generate_file_indicators(
     for name,iind in zip(indicator_name,seq_ind):
         # Set the random walk path for this indicator
         #df["value"] = random_ar_data(length=length)
-        df["value"] = dfr[:, iind]
+        df["value"] = dfr.iloc[:, iind]
         # assign the indictaor its name
         df["indicator_name"] = name
         # concat this indicator with the others
@@ -316,7 +316,7 @@ def generate_file_target(
     dfr = pd.read_csv(file_str)
 
     iind_target = 28-1
-    target_df = dfr[:, iind_target]
+    target_df = dfr.iloc[:, iind_target]
     
     target_df = target_df.loc[index, "value"]
     target_df.index.name = "ref_date"
