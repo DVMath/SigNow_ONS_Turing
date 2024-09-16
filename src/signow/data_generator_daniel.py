@@ -157,7 +157,7 @@ def generate_file_indicators(
     
     dfr = pd.read_csv(file_str)
     
-    seq_ind = pd.Series([16])
+    seq_ind = pd.Series([16-1])
     for name,iind in zip(indicator_name,seq_ind):
         # Set the random walk path for this indicator
         #df["value"] = random_ar_data(length=length)
@@ -315,7 +315,7 @@ def generate_file_target(
 
     dfr = pd.read_csv(file_str)
 
-    iind_target = 28
+    iind_target = 28-1
     target_df = dfr[:, iind_target]
     
     target_df = target_df.loc[index, "value"]
@@ -482,8 +482,8 @@ def create_data_file(
     dfr = pd.read_csv(file_str)
     # print(dfr)
 
-    start_date = dfr.iloc[0,3]
-    end_date = dfr.iloc[len(dfr)-1, 3]
+    start_date = dfr.iloc[0,3-1]
+    end_date = dfr.iloc[len(dfr)-1, 3-1]
 
     print(f"Start date: {start_date}")
     print(f"End date: {end_date}")
