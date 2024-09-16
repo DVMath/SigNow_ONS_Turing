@@ -161,7 +161,7 @@ def generate_file_indicators(
     for name,iind in zip(indicator_name,seq_ind):
         # Set the random walk path for this indicator
         #df["value"] = random_ar_data(length=length)
-        df["value"] = dfr.iloc[:, iind]
+        df["value"] = dfr.iloc[:, iind].values
         print("generate file indicators")
         print(name)
         print(iind)
@@ -325,7 +325,7 @@ def generate_file_target(
     print("dfr")
     print(dfr.iloc[:, iind_target])
     #iind_target = 28-1
-    target_df["value"] = dfr.iloc[:, iind_target]
+    target_df["value"] = dfr.iloc[:, iind_target].values
     
     print("target_df")
     print(target_df)
