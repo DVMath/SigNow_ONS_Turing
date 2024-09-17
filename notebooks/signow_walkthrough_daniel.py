@@ -35,6 +35,25 @@ from signow.data_generator_daniel import create_data_sir, create_data_file, sir_
 
 from walkthrough_helper_funcs import display_indicators, display_target, display_period_data, print_period_dates, display_t_predictions, display_barh_coef
 
+import argparse 
+
+import argparse
+
+# Initialize the parser
+parser = argparse.ArgumentParser(description='Process file name')
+
+# Add arguments
+parser.add_argument('x', type=str, help='file orig')
+parser.add_argument('y', type=str, help='file final')
+
+# Parse the arguments
+args = parser.parse_args()
+
+# Access the arguments and perform some operations
+# result = args.x + args.y
+print(f"The args are: {args.x} and {args.y} ")
+
+
 # %%
 # Generate the target and indicator data
 indicators, target = create_data_file(start_date_o='2000-01-01',
@@ -173,7 +192,7 @@ display_period_data(sn_)
 
 # %%
 sn_ = SigNowcaster(X=indicators, y=target,
-                    start_test='2008-01-01',
+                    start_test='2019-01-01',
                     regressor="elasticnet",
                     apply_pca=False, **params).fit()
 # Run a Static nowcast and produce
@@ -189,6 +208,7 @@ sn_static
 sn_recursive_pca = sn_.recursive_nowcast(start_test='2010-01-01')
 sn_recursive_pca
 
+print("recurve nowcast")
 # %% [markdown]
 # __________________________________________________________________
 #
@@ -204,11 +224,12 @@ sn_recursive_pca
 
 # %%
 sn_ = SigNowcaster(X=indicators, y=target,
-                    start_test='2008-01-01',
+                    start_test='2019-01-01',
                     regressor="elasticnet",
                     apply_pca=False, **params).fit()
 sn_static = sn_.static_nowcast()
 
+print("after SigNowcaster")
 # %%
 sn_.train_rmse_
 
@@ -242,6 +263,10 @@ coef = sn_.model_.estimator_['regression'].coef_
 # Inspect the signature terms for the training period
 sig_terms_train = sn_.model_.transform_pipe_.fit_transform(X=sn_.data.X_train(), y=sn_.data.y_train())
 
+print(coef)
+
+coefdf = pd.DataFrame(coef)
+coefdf.to_csv("res.csv")
 display_barh_coef(coef, sig_terms_train)
 
 # %% [markdown]
